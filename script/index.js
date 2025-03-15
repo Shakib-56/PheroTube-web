@@ -8,6 +8,10 @@ const loadCategories=()=>{
    .then((data)=>disPlayCategories(data.categories));
 }
 
+
+
+
+// Display Categories
 const disPlayCategories=(categories)=>{
 
 // get the container
@@ -20,7 +24,7 @@ for(let cat of categories){
    const categoryDiv=document.createElement('div');
    
    categoryDiv.innerHTML=`
-       <button class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
+       <button onclick="loadCategoriesVideos(${cat.category_id})" class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
    `
     // Append the element
 
@@ -30,37 +34,36 @@ for(let cat of categories){
 
 }
 
-loadCategories();
 
-/*{
-    "category_id": "1001",
-    "video_id": "aaal",
-    "thumbnail": "https://i.ibb.co/hdtZYbB/enchnting.jpg",
-    "title": "Enchanted Harmonies",
-    "authors": [
-        {
-            "profile_picture": "https://i.ibb.co/jh1q2F3/shopia.jpg",
-            "profile_name": "Sophia Williams",
-            "verified": false
-        }
-    ],
-    "others": {
-        "views": "7.6K",
-        "posted_date": "16450"
-    },
-    "description": "'Enchanted Harmonies' by Sophia Williams enchants listeners with its delicate, soothing sounds and melodic complexity. Garnering 7.6K views, this piece is perfect for those seeking an immersive musical experience that blends elegance with emotion, offering a unique soundscape that resonates deeply with its audience."
-} */
+
 /*Load videos */
 const loadVideos=()=>{
    const videoEndPoint=fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
    videoEndPoint.then(response=>response.json()).then((data)=>displayVideos(data.videos));
 }
 
+//Add categoriwise  video 
+const loadCategoriesVideos=(id)=>{
+   const url=`https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+
+   fetch(url).then(res=>res.json()).then(data=>displayVideos(data.category));
+
+}
+
+
 // Display videos
 const displayVideos=(videos)=>{
 console.log(videos);
 // grab the video container
    const videosContainer=document.getElementById('videos-container');
+   videosContainer.innerHTML=" ";
+   if(videos.length===0){
+      videosContainer.innerHTML=`<div class="col-span-full py-20 gap-4 flex flex-col justify-center items-center">
+            <img src="./assets/Icon.png" alt="">
+            <h2 class="text-3xl text-center font-bold ">Oops!! Sorry, There is no <br> content here</h2>
+        </div>`
+      return ;
+   }
 //Loop over the arrays
 videos.forEach(video => {
    const cardDiv=document.createElement('div');
@@ -90,4 +93,4 @@ videos.forEach(video => {
  videosContainer.appendChild(cardDiv);  
 });
 }
-loadVideos();
+loadCategories();
