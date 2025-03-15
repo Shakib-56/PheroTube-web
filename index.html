@@ -7,6 +7,12 @@
     <!-- DaisyUI and Tailwind CDN -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+    .active{
+        background:#FF1F3D;
+        color:white;
+    }
+</style>
 </head>
 <body>
     <header>
@@ -15,16 +21,16 @@
                     <img class="w-[180px]"  src="./assets/Logo.png" alt="">
                 </div>
                 <div>
-                    <button class="px-8 py-2 font-medium bg-slate-200 rounded-sm">Sort by view</button>
+                    <button class="px-4 py-2 font-medium bg-slate-200 rounded-sm">Sort by view</button>
                 </div>
                 <div>
                     <button class="px-4 p-2 text-white bg-[#FF1F3D] rounded-sm">Blog</button>
                 </div>
         </nav>
     </header>
-    <nav id="category-container" class="flex py-4 text-center justify-center items-center gap-4">
+    <nav id="category-container" class="flex py-4 mx-auto text-center justify-center items-center gap-5">
         <div>
-    <button onclick="loadVideos()" class="btn btn-sm bg-[#FF1F3D] text-white">All</button>
+    <button id="btn-all" onclick="loadVideos()" class="btn btn-sm ">All</button>
 
         </div>
     </nav>

@@ -1,4 +1,10 @@
-
+// Remove active class
+const removeActiveClass=()=>{
+   const allActiveBtns=document.getElementsByClassName('active');
+   for(let btn of allActiveBtns){
+      btn.classList.remove('active');
+   }
+}
 // Load categories
 const loadCategories=()=>{
    const categoriesEndpoint= fetch('https://openapi.programming-hero.com/api/phero-tube/categories');
@@ -7,9 +13,6 @@ const loadCategories=()=>{
 //    send data to displaCategories
    .then((data)=>disPlayCategories(data.categories));
 }
-
-
-
 
 // Display Categories
 const disPlayCategories=(categories)=>{
@@ -24,7 +27,7 @@ for(let cat of categories){
    const categoryDiv=document.createElement('div');
    
    categoryDiv.innerHTML=`
-       <button onclick="loadCategoriesVideos(${cat.category_id})" class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
+       <button id="btn-${cat.category_id}" onclick="loadCategoriesVideos(${cat.category_id})" class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
    `
     // Append the element
 
@@ -34,26 +37,32 @@ for(let cat of categories){
 
 }
 
-
-
 /*Load videos */
 const loadVideos=()=>{
    const videoEndPoint=fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
-   videoEndPoint.then(response=>response.json()).then((data)=>displayVideos(data.videos));
+   videoEndPoint.then(response=>response.json()).then((data)=>{
+      
+      document.getElementById('btn-all').classList.add('active');
+      displayVideos(data.videos)});
 }
 
 //Add categoriwise  video 
 const loadCategoriesVideos=(id)=>{
    const url=`https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
 
-   fetch(url).then(res=>res.json()).then(data=>displayVideos(data.category));
+   fetch(url).then(res=>res.json()).then(data=>{
+      removeActiveClass();//no active class here
+
+      const clickedBtn=document.getElementById(`btn-${id}`);
+      clickedBtn.classList.add('active');
+      displayVideos(data.category);
+   });
 
 }
 
 
 // Display videos
 const displayVideos=(videos)=>{
-console.log(videos);
 // grab the video container
    const videosContainer=document.getElementById('videos-container');
    videosContainer.innerHTML=" ";
