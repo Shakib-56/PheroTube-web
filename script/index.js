@@ -96,7 +96,7 @@ const displayVideoDetails=(video)=>{
     <h2 class="p-0 text-2xl font-bold ">${video.title}</h2>
     <div>
    <p><strong>Author Name :</strong> ${video.authors[0].profile_name}</p>
-   <p><strong class="m-0">Posted date:</strong> ${video.others.views}</p>
+   <p><strong class="m-0">Video views:</strong> ${video.others.views}</p>
    <p><strong class="m-0">Posted date:</strong> ${video.others.posted_date}</p>
     </div>
     <button class="px-4 py-2 text-lg font-medium bg-red-700 text-white w-2/6 border-none rounded-lg align-middle">Subscribe</button>
