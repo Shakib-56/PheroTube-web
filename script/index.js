@@ -1,3 +1,15 @@
+// show loader 
+const showloader=()=>{
+   document.getElementById('loader').classList.remove('hidden');
+   document.getElementById('videos-container').classList.add('hidden');
+}
+//  hide loader 
+const hideLoader=()=>{
+   document.getElementById('loader').classList.add('hidden');
+   document.getElementById('videos-container').classList.remove('hidden');
+}
+
+
 // Remove active class
 const removeActiveClass=()=>{
    const allActiveBtns=document.getElementsByClassName('active');
@@ -7,6 +19,7 @@ const removeActiveClass=()=>{
 }
 // Load categories
 const loadCategories=()=>{
+   showloader();
    const categoriesEndpoint= fetch('https://openapi.programming-hero.com/api/phero-tube/categories');
 //    1-convert promise to json
    categoriesEndpoint.then((res)=> res.json())
@@ -34,20 +47,22 @@ for(let cat of categories){
    categoriesContainer.appendChild(categoryDiv);
 
 }
-
+hideLoader();
 }
 
 /*Load videos */
 const loadVideos=(searchText=" ")=>{
+   showloader();
    const videoEndPoint=fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`);
    videoEndPoint.then(response=>response.json()).then((data)=>{
-      
+      removeActiveClass();
       document.getElementById('btn-all').classList.add('active');
       displayVideos(data.videos)});
 }
 
 //Add categoriwise  video 
 const loadCategoriesVideos=(id)=>{
+   showloader();
    const url=`https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
 
    fetch(url).then(res=>res.json()).then(data=>{
@@ -103,6 +118,7 @@ const displayVideos=(videos)=>{
             <img src="./assets/Icon.png" alt="">
             <h2 class="text-3xl text-center font-bold ">Oops!! Sorry, There is no <br> content here</h2>
         </div>`
+      hideLoader();
       return ;
    }
 //Loop over the arrays
@@ -135,6 +151,7 @@ videos.forEach(video => {
                   `
  videosContainer.appendChild(cardDiv);  
 });
+hideLoader();
 }
 // search inpt functionality
 document.getElementById('search-input').addEventListener('keyup',(e)=>{
