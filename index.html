@@ -21,10 +21,13 @@
                     <img class="w-[180px]"  src="./assets/Logo.png" alt="">
                 </div>
                 <div>
-                    <button class="px-4 py-2 font-medium bg-slate-200 rounded-sm">Sort by view</button>
+                    <label class="input">
+                        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></g></svg>
+                        <input id="search-input" type="search" required placeholder="Search"/>
+                      </label>
                 </div>
                 <div>
-                    <button class="px-4 p-2 text-white bg-[#FF1F3D] rounded-sm">Blog</button>
+                    <button class="px-4 p-2 text-white bg-[#FF1F3D] rounded-sm">Sort by view</button>
                 </div>
         </nav>
     </header>
@@ -35,7 +38,7 @@
         </div>
     </nav>
     <!-- videos container -->
-    <section id="videos-container" class="max-w-screen-xl mx-auto grid grid-cols-4 gap-5">
+    <section id="videos-container" class="max-w-screen-xl my-6 mx-auto grid grid-cols-4 gap-5">
         <div class=" col-span-full py-20 gap-4 flex flex-col justify-center items-center">
             <img src="./assets/Icon.png" alt="">
             <h2 class="text-3xl text-center font-bold ">Oops!! Sorry, There is no <br> content here</h2>
@@ -43,6 +46,22 @@
         </div>
         
     </section>
+    <!-- modal -->
+     <!-- Open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+<dialog id="video_details" class="modal">
+  <div class="modal-box">
+    <div id="details_container">
+        
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
     
 
     <script src="./script/index.js"></script>

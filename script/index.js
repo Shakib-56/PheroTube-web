@@ -38,8 +38,8 @@ for(let cat of categories){
 }
 
 /*Load videos */
-const loadVideos=()=>{
-   const videoEndPoint=fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
+const loadVideos=(searchText=" ")=>{
+   const videoEndPoint=fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`);
    videoEndPoint.then(response=>response.json()).then((data)=>{
       
       document.getElementById('btn-all').classList.add('active');
@@ -60,6 +60,38 @@ const loadCategoriesVideos=(id)=>{
 
 }
 
+//Load video details
+const loadVideoDetails=(videoID)=>{
+   const url=`https://openapi.programming-hero.com/api/phero-tube/video/${videoID}`;
+   fetch(url).then(res=>res.json()).then(data=>displayVideoDetails(data.video));
+}
+//Display video details
+const displayVideoDetails=(video)=>{
+   console.log(video);
+   document.getElementById('video_details').showModal();
+   const detailsContainer=document.getElementById('details_container');
+   detailsContainer.innerHTML=`
+   <div class="card bg-base-100 image-full shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="thumbnail" />
+  </figure>
+  <div class="card-body">
+    <h2 class="p-0 text-2xl font-bold ">${video.title}</h2>
+    <div>
+   <p><strong>Author Name :</strong> ${video.authors[0].profile_name}</p>
+   <p><strong class="m-0">Posted date:</strong> ${video.others.views}</p>
+   <p><strong class="m-0">Posted date:</strong> ${video.others.posted_date}</p>
+    </div>
+    <button class="px-4 py-2 text-lg font-medium bg-red-700 text-white w-2/6 border-none rounded-lg align-middle">Subscribe</button>
+   
+  </div>
+</div>
+   `
+
+}
+
 
 // Display videos
 const displayVideos=(videos)=>{
@@ -76,7 +108,8 @@ const displayVideos=(videos)=>{
 //Loop over the arrays
 videos.forEach(video => {
    const cardDiv=document.createElement('div');
-   cardDiv.innerHTML=`<div class="card bg-base-100 ">
+   cardDiv.innerHTML=
+   `<div class="card bg-base-100 ">
             <figure class="relative">
               <img class="w-full h-[180px] object-cover"
                 src="${video.thumbnail}"
@@ -92,14 +125,21 @@ videos.forEach(video => {
                   <div id="intro" class="space-y-1">
                     <h2 class="text-lg  font-semibold">${video.title}
                     </h2>
-                    <p class="text-sm  text-gray-600 flex gap-1">${video.authors[0].profile_name} <img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt=""></p>
+                    <p class="text-sm  text-gray-600 flex gap-1">${video.authors[0].profile_name}<span>${video.authors[0].verified ?`<img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt=""></img>`:" "}</span></p>
                     <p class="text-sm  text-gray-600">${video.others.views}</p>
 
                   </div>
             </div>
-          </div>
+            <button onclick="loadVideoDetails('${video.video_id}') " class="btn btn-block">Show Details</button>
+         </div>
                   `
  videosContainer.appendChild(cardDiv);  
 });
 }
+// search inpt functionality
+document.getElementById('search-input').addEventListener('keyup',(e)=>{
+   e.preventDefault();
+   const input=e.target.value;
+   loadVideos(input);
+})
 loadCategories();
